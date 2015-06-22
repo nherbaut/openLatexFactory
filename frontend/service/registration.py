@@ -9,5 +9,5 @@ def do_sign_in(username,password):
     return render_template('main.html', username=username)
 
 
-def do_sign_up(username,password):
-    return render_template('signup.html', username, password)
+def do_sign_up(username='',password=''):
+    return render_template('signup.html', username=username, password=password)
