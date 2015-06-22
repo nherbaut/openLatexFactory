@@ -48,6 +48,13 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.eclipse.mylyn.github</groupId>
+			<artifactId>org.eclipse.egit.github.core</artifactId>
+			<version>2.1.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-grizzly2-http</artifactId>
@@ -238,7 +245,12 @@
 								</ports>
 
 								<cmd>
-									<shell>java -cp /maven/*:/maven/${project.build.finalName} fr.labri.progress.comet.app.Main --host 0.0.0.0 --port 8080 --rabbit-host $AMQP_PORT_5672_TCP_ADDR --rabbit-port $AMQP_PORT_5672_TCP_PORT --streamer-host $STREAMER_PORT_8081_TCP_ADDR --streamer-port $STREAMER_PORT_8081_TCP_PORT</shell>
+									<shell>java -cp /maven/*:/maven/${project.build.finalName}
+										fr.labri.progress.comet.app.Main --host 0.0.0.0 --port 8080
+										--rabbit-host $AMQP_PORT_5672_TCP_ADDR --rabbit-port
+										$AMQP_PORT_5672_TCP_PORT --streamer-host
+										$STREAMER_PORT_8081_TCP_ADDR --streamer-port
+										$STREAMER_PORT_8081_TCP_PORT</shell>
 								</cmd>
 
 							</build>

@@ -3,9 +3,7 @@ package fr.labri.progress.comet.conf;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
-import fr.labri.progress.comet.endpoint.ConfigurationEndpoint;
-import fr.labri.progress.comet.endpoint.ContentEndpoint;
-import fr.labri.progress.comet.endpoint.StatisticsTest;
+import fr.labri.progress.comet.endpoint.AuthEndpoint;
 
 /**
  * configure the exported resource to rest api
@@ -19,9 +17,9 @@ public class RestConfiguration extends ResourceConfig {
 		super(MyApplicationEventListener.class);
 		// needed for spring injection
 		register(RequestContextFilter.class);
-		register(ContentEndpoint.class);
-		register(ConfigurationEndpoint.class);
-		register(StatisticsTest.class);
+		
+		register(AuthEndpoint.class);
+		
 		
 
 		// tell were to find resources
