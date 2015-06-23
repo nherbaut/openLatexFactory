@@ -4,9 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.sql.DataSource;
 
-import org.hsqldb.jdbc.JDBCDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpConnectException;
@@ -18,14 +16,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 
 import fr.labri.progress.comet.service.WorkerMessageService;
-import fr.labri.progress.comet.service.WorkerMessageServiceImpl;
 
 /**
  * this class is responsible for configuring spring context and repositories
@@ -53,24 +49,19 @@ public class SpringConfiguration {
 
 	}
 
-	@Inject
-	WorkerMessageService wms;
+//	@Inject
+//	WorkerMessageService wms;
+//
+//	@PostConstruct
+//	public void setupQueue() {
+//		try {
+//			wms.setupResultQueue();
+//		} catch (AmqpConnectException e) {
+//			LOGGER.warn("failed to setup the result queue for RabbitMQ");
+//		}
+//	}
 
-	@PostConstruct
-	public void setupQueue() {
-		try {
-			wms.setupResultQueue();
-		} catch (AmqpConnectException e) {
-			LOGGER.warn("failed to setup the result queue for RabbitMQ");
-		}
-	}
-
-	@Bean
-	public DataSource ds() {
-
-		return new JDBCDataSource();
-
-	}
+	
 
 	@Bean(name = "transactionManager")
 	@Inject

@@ -37,8 +37,13 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
 
-     Bienvenue {{  username }}!
+     Bienvenue {{  user_id }}!
+    <ul>
+    {% for repo in repos %}
+    <li> {{ repo.name }}</li>
 
+    {% endfor %}
+    </ul>
 
 
       <footer>
