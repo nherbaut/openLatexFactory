@@ -13,5 +13,6 @@ public final class CliConfSingleton {
 	public static Integer rabbitPort;
 	public static String streamerHost;
 	public static Integer streamerPort;
+	
 
 }

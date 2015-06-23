@@ -23,11 +23,20 @@ public class Repository {
 
 	private long id;
 	private String name;
+	private boolean active;
 
 	public void from(org.eclipse.egit.github.core.Repository repos) {
 		this.id = repos.getId();
 		this.name = repos.getName();
 
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

@@ -1,9 +1,14 @@
 package fr.labri.progress.comet.conf;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Scope;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +38,7 @@ import fr.labri.progress.comet.service.WorkerMessageService;
 @ComponentScan(basePackages = { "fr.labri.progress.comet.service",
 		"fr.labri.progress.comet.repository", "fr.labri.progress.comet.conf" })
 @EnableJpaRepositories("fr.labri.progress.comet.repository")
-@Import(RabbitMqConfiguration.class)
+@Import({ RabbitMqConfiguration.class, SpringWebRequestConfiguration.class })
 public class SpringConfiguration {
 
 	private static final Logger LOGGER = LoggerFactory
@@ -49,19 +54,17 @@ public class SpringConfiguration {
 
 	}
 
-//	@Inject
-//	WorkerMessageService wms;
-//
-//	@PostConstruct
-//	public void setupQueue() {
-//		try {
-//			wms.setupResultQueue();
-//		} catch (AmqpConnectException e) {
-//			LOGGER.warn("failed to setup the result queue for RabbitMQ");
-//		}
-//	}
-
-	
+	// @Inject
+	// WorkerMessageService wms;
+	//
+	// @PostConstruct
+	// public void setupQueue() {
+	// try {
+	// wms.setupResultQueue();
+	// } catch (AmqpConnectException e) {
+	// LOGGER.warn("failed to setup the result queue for RabbitMQ");
+	// }
+	// }
 
 	@Bean(name = "transactionManager")
 	@Inject
@@ -73,7 +76,7 @@ public class SpringConfiguration {
 	@Inject
 	public EntityManagerFactory emf() {
 
-		return Persistence.createEntityManagerFactory("cache-orchestrator");
+		return Persistence.createEntityManagerFactory("openLatexFactory");
 	}
 
 }

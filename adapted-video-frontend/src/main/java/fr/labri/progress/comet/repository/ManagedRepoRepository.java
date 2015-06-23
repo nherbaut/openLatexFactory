@@ -3,8 +3,9 @@ package fr.labri.progress.comet.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fr.labri.progress.comet.model.GitUser;
+import fr.labri.progress.comet.model.ManagedRepo;
 
-public interface GitUserRepository extends JpaRepository<GitUser, String> {
+public interface ManagedRepoRepository extends
+		JpaRepository<ManagedRepo, Long> {
 
-	public GitUser findByName(String name);
 }

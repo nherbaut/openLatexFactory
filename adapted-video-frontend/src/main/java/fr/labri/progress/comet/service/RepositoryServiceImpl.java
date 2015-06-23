@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import fr.labri.progress.comet.exception.NoSuchUserException;
 import fr.labri.progress.comet.model.GitUser;
+import fr.labri.progress.comet.model.ManagedRepo;
 import fr.labri.progress.comet.model.OAuthRequest;
 import fr.labri.progress.comet.repository.GitUserRepository;
 
@@ -36,20 +38,32 @@ public class RepositoryServiceImpl implements
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<fr.labri.progress.comet.xml.model.Repository> getRepoFromUserId(
-			final String userId) {
+			final String userId) throws NoSuchUserException {
 
 		try {
 			List<fr.labri.progress.comet.xml.model.Repository> res = new ArrayList<fr.labri.progress.comet.xml.model.Repository>();
 
 			org.eclipse.egit.github.core.service.RepositoryService repoService = new org.eclipse.egit.github.core.service.RepositoryService();
 			GitUser user = userRepo.findOne(userId);
+			if (user == null) {
+				throw new NoSuchUserException();
+			}
 			for (OAuthRequest request : user.getRequests()) {
 				repoService.getClient().setOAuth2Token(
 						request.getAccess_token());
-				for (Repository repos : repoService.getRepositories()) {
-					fr.labri.progress.comet.xml.model.Repository repo = new fr.labri.progress.comet.xml.model.Repository();
+				for (Repository repos : repoService.getRepositories(user.getName())) {
 
+					fr.labri.progress.comet.xml.model.Repository repo = new fr.labri.progress.comet.xml.model.Repository();
 					repo.from(repos);
+					repo.setActive(false);
+					// do we know already about this repo?
+					for (ManagedRepo mrepo : user.getRepos()) {
+						if (mrepo.getId().equals(repos.getId())) {
+							repo.setActive(mrepo.getHookActive());
+							break;
+						}
+					}
+
 					res.add(repo);
 
 				}

@@ -11,8 +11,15 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@XmlRootElement
 public class GitUser {
+
+	public List<ManagedRepo> getRepos() {
+		return repos;
+	}
+
+	public void setRepos(List<ManagedRepo> repos) {
+		this.repos = repos;
+	}
 
 	@Id
 	String id;
@@ -45,5 +52,8 @@ public class GitUser {
 
 	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private List<OAuthRequest> requests = new ArrayList<OAuthRequest>();
+
+	@OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	private List<ManagedRepo> repos = new ArrayList<ManagedRepo>();
 
 }

@@ -18,12 +18,8 @@ def get_db():
     return db
 
 
-def do_sign_in(username, password):
-    return render_template('main.html', user_name=username)
-
-
-def do_sign_up(username='', password=''):
-    return render_template('signup.html', user_name=username, user_password=password,
+def do_sign_up_or_in(username='', password=''):
+    return render_template('signup.html',
                            github_signup=git_microservice_url + "github/auth")
 
 

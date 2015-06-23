@@ -10,6 +10,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.hsqldb.server.Server;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 import com.lexicalscope.jewel.cli.CliFactory;
@@ -38,7 +39,7 @@ public class Main {
 	 */
 	public static void main(String[] args) throws IOException,
 			InterruptedException {
-//salut
+		// salut
 		try {
 			CliConfiguration cliconf = CliFactory.parseArguments(
 					CliConfiguration.class, args);
@@ -60,6 +61,7 @@ public class Main {
 
 			// add a listener to spring so that IoC can happen
 			webappContext.addListener(ContextLoaderListener.class);
+			webappContext.addListener(RequestContextListener.class);
 
 			// specify that spring should be configured with annotations
 			webappContext.addContextInitParameter(
